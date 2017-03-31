@@ -218,13 +218,11 @@ while True:
                
 
     elif exampleType == 9:
+        accel.set_ODR(odr=50, powerMode='off') # put the accel in power down mode
         break
 
-#---- exiting section-----------        
+#---- exiting section-----------
+    
+del(accel)
 
-accel.set_ODR(odr=50, powerMode='off') # put the accel in power down mode
 
-if accel.mode == 'spi':    
-    accel.spi.close()
-else:  #i2C    
-    accel.bus.close()

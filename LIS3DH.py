@@ -577,9 +577,19 @@ class Accelerometer:
         
         return zTotal
 
+    def __del__(self):
+        """__del__, cleanup i2c or SPI connections"""
+
+        self.set_ODR(odr=50, powerMode='off') # put the accel in power down mode
+
+        if self.mode == 'spi':    
+            self.spi.close()
+        else:  #i2C    
+            self.bus.close()
 
 
-    # need a clean up function
+
+   
     
     
     
