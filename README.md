@@ -1,8 +1,9 @@
 # LIS3DH-Python-Module
-Python 2.x module to use with the LIS3DH accelerometer. Testing done on a adafruit LIS3DH breakout board and a Raspberry Pi3
+Python 2.x module to use with the LIS3DH accelerometer. Testing done on a adafruit LIS3DH breakout board and a Raspberry Pi3.  Other LIS3DH breakout boards,  i.e. sparkfun should work as well, just be careful on your voltage levels on the various pins.
+
 This supports both SPI and i2C. SPI requires py-spidev and python-dev modules. i2C requires smbus
 
-I will add a nicer module in the near future.  For now I've included a practice file and not alot of explanation.
+Also included is an example file that when run has some example accelerometer uses. I connected an LED up to INT1 (with appropriate current limiting resistor) to demonstrate the int1 pin use.
 
 SPI connections to the LIS3DH board from the Pi are as follows:
 - Pi 3.3V to LIS3DH Vin
