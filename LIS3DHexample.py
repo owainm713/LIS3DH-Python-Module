@@ -33,15 +33,14 @@ accel.latch_interrupt('on')
 accel.set_BDU('on')
 accel.set_scale()
 
-
-
 while True:
     print('1. Raw X,Y & Z Data Output')
     print('2. Inertial Threshold Wake-up')
     print('3. 6D Positioning')
     print('4. 6D Movement')
     print('5. Single Click')
-    print('6. Get Temperature')
+    print('6. Double Click')
+    print('7. Get Temperature')
     print('9. Quit')
     exampleType = input('Pick example set up type: ')
 
@@ -198,9 +197,39 @@ while True:
             accel.set_int1_pin(click=0,aoi1=0, aoi2=0, drdy1=0, drdy2=0, wtm=0, overrun=0) # turn off CLICK interrupt
             accel.set_click_config(zd=0, zs=0, yd=0, ys=0, xd=0, xs=0) # disable Z single click on CLICK_CFG
 
-    #--------- Get temperature ---------------------------
+    #--------- Double Click (Z) --------------------------
+    # CLICK interrupt output to pin INT1
 
     elif exampleType == 6:
+        # CLICK is the interrupt required for single click
+        # double tap by the accelerometer to see the interrupt status change
+        
+        accel.set_int1_pin(click=1,aoi1=0, aoi2=0, drdy1=0, drdy2=0, wtm=0, overrun=0) # turn on CLICK interrupt
+        accel.set_click_config(zd=1, zs=0, yd=0, ys=0, xd=0, xs=0) # enable Z double click on CLICK_CFG
+        accel.set_click_threshold(1088)       # set CLICK_THS to 1088 mg
+        accel.set_click_timelimit(120)        # set TIME_LIMIT to 120ms
+        accel.set_click_timelatency(320)      # set TIME_LATENCY to 320ms
+        accel.set_click_timewindow(400)       # set TIME_WINDOW to 512ms
+
+        print('\nPress Ctrl-C to stop')
+        print('Starting Double Click')
+
+        try:
+            while True:            
+                z = accel.z_axis_reading()
+                interrupt1 = accel.get_clickInt_status()
+                print ('z: '+str(z)+ ' Click Interrupt Status  '+str(bin(interrupt1)))
+                time.sleep(.25)
+                
+        except:
+            print('Stopping Double Click')
+            accel.set_int1_pin(click=0,aoi1=0, aoi2=0, drdy1=0, drdy2=0, wtm=0, overrun=0) # turn off CLICK interrupt
+            accel.set_click_config(zd=0, zs=0, yd=0, ys=0, xd=0, xs=0) # disable Z single click on CLICK_CFG
+
+
+    #--------- Get temperature ---------------------------
+
+    elif exampleType == 7:
        
         accel.enable_temperature()
 

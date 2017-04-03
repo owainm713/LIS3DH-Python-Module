@@ -400,6 +400,59 @@ class Accelerometer:
 
         return
 
+    def set_fifo_mode(self, mode='bypass'):
+        """set_fifo_mode, function to set the fifo mode of the accelerometer,
+        valid value for mode are; off, bypass, fifo, stream and streamfifo.
+        This sets bit 6 of CTRL_REG5 (0x24) and bits 6 & 7 of FIFO_CTRL_REG
+        (0x2E)"""
+
+        CTRL_REG5 = self.single_access_read(0x24)
+        FIFO_CTRL_REG = self.single_access_read(0x2E)
+
+        enableBit = 0b1 # default value: enable
+        modeBits = 0b00 # default value: bypass
+
+        if mode == 'off':
+            enableBit = 0b0
+        elif mode == 'fifo':
+            modeBits = 0b01
+        elif mode == 'stream':
+            modeBits = 0b10
+        elif mode == 'streamfifo':
+            modeBits = 0b11 
+
+        CTRL_REG5 = CTRL_REG5 & 0b10111111
+        CTRL_REG5 = CTRL_REG5 | (enableBit<<6)
+        self.single_access_write(0x24, CTRL_REG5)
+
+        FIFO_CTRL_REG = FIFO_CTRL_REG & 0b00111111
+        FIFO_CTRL_REG = FIFO_CTRL_REG | (modeBits<<6)
+        self.single_access_write(0x2E, FIFO_CTRL_REG)
+
+        #print(hex(CTRL_REG5),bin(CTRL_REG5))  # for testing
+        #print(hex(FIFO_CTRL_REG),bin(FIFO_CTRL_REG))  # for testing
+
+        return
+
+    def set_fifo_threshold(self, threshold):
+        """set_fifo_threshold, function to the fifo threshold level.
+        This sets bits 0-4 of FIFO_CTRL_REG (0x2E)"""
+
+        FIFO_CTRL_REG = self.single_access_read(0x2E)
+
+        threshold = int(abs(threshold))
+
+        if threshold > 31:
+            threshold = 31
+
+        FIFO_CTRL_REG = FIFO_CTRL_REG & 0b11100000
+        FIFO_CTRL_REG = FIFO_CTRL_REG | threshold
+        self.single_access_write(0x2E, FIFO_CTRL_REG)
+
+        #print(hex(FIFO_CTRL_REG),bin(FIFO_CTRL_REG))  # for testing
+
+        return        
+
     def set_int1_config(self, aoi=1, d6=0, zh=0, zl=0, yh=0, yl=0, xh=0, xl=0):
         """set_int1_config, function to set the INT1_CFG regisiter (0x30) options"""
 
