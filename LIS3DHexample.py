@@ -3,7 +3,7 @@
 module
 
 created Mar 27, 2017 OM
-work in progress - Apr 3, 2017 OM"""
+work in progress - Apr 4, 2017 OM"""
 
 """
 Copyright 2017 Owain Martin
@@ -26,6 +26,7 @@ import LIS3DH
 import time, spidev, sys, smbus
 
 accel = LIS3DH.Accelerometer('i2c',i2cAddress = 0x19)
+#accel = LIS3DH.Accelerometer('spi', i2cAddress = 0x0, spiPort = 0, spiCS = 0)  # spi connection alternative
 accel.set_ODR(odr=50, powerMode='normal')
 accel.axis_enable(x='on',y='on',z='on')
 accel.interrupt_high_low('high')

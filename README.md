@@ -27,8 +27,12 @@ i2c connections to the LIS3DH board from the Pi are as follows:
 
 i2C address of 0x19
 
+Together the LIS3DH data sheet and LIS3DH app note are useful for figuring out how to config the accelerometer for the various applications.  I recommend using them.
+Both can be downloaded from either the st, adafruit or sparkfun websites.
+
 Current functions include
 
+- adc_reading(self, channel)
 - axis_enable(x='on',y='on',z='on')
 - disable_temperature(adcOn='on')
 - enable_temperature()

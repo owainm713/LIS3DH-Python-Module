@@ -2,7 +2,7 @@
 """LIS3DH, module for use with a LIS3DH accelerometer
 
 created Mar 27, 2017 OM
-work in progress - Apr 3, 2017 OM"""
+work in progress - Apr 4, 2017 OM"""
 
 """
 Copyright 2017 Owain Martin
@@ -98,6 +98,21 @@ class Accelerometer:
         x = x>>6  # remove left justification of data    
 
         return x
+
+    def adc_reading(self, channel):
+        """adc_reading, function to read one of the accelerometer's onboard
+        adc channels"""
+
+        channel = channel - 1
+
+        channelAddress = [(0x08, 0x09), (0x0A, 0x0B), (0x0C, 0x0D)]
+        
+        adcL = self.single_access_read(channelAddress[channel][0])
+        adcH = self.single_access_read(channelAddress[channel][1])        
+
+        adcTotal = self.twos_complement_conversion(adcH, adcL)
+        
+        return adcTotal
 
     def axis_enable(self, x='on',y='on',z='on'):
         """axis_enable, function to enable/disable the x, y and z axis"""
