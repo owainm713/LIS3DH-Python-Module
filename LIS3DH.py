@@ -2,7 +2,7 @@
 """LIS3DH, module for use with a LIS3DH accelerometer
 
 created Mar 27, 2017 OM
-work in progress - Mar 30, 2017 OM"""
+work in progress - Apr 3, 2017 OM"""
 
 """
 Copyright 2017 Owain Martin
@@ -155,7 +155,7 @@ class Accelerometer:
         return
 
     def interrupt_high_low(self, level='high'):
-        """interrupt_high_low, function to set the interrupt ins to either
+        """interrupt_high_low, function to set the interrupt pins to either
         active high or active low"""
 
         CTRL_REG6 = self.single_access_read(0x25)
@@ -255,6 +255,26 @@ class Accelerometer:
 
         CTRL_REG5 = CTRL_REG5 & 0b11110111
         CTRL_REG5 = CTRL_REG5 | (latchBit<<3)
+
+        #print (bin(CTRL_REG5)) # for testing
+
+        self.single_access_write(0x24, CTRL_REG5)
+
+        return
+
+    def set_4D(self, enable='on'):
+        """set_4D, function to turn 4D detection on or off. This sets
+        bit 3 of CTRL_REG5 (0x24)"""
+
+        CTRL_REG5 = self.single_access_read(0x24)
+
+        if enable == 'off':
+            enableBit = 0b0
+        else:
+            enableBit = 0b1
+
+        CTRL_REG5 = CTRL_REG5 & 0b11111011
+        CTRL_REG5 = CTRL_REG5 | (enableBit<<2)
 
         #print (bin(CTRL_REG5)) # for testing
 
@@ -451,6 +471,39 @@ class Accelerometer:
 
         #print(hex(FIFO_CTRL_REG),bin(FIFO_CTRL_REG))  # for testing
 
+        return
+
+    def set_highpass_filter(self, mode, freq, FDS, hpClick, hpIS2, hpIS1):
+        """set_highpass_filter, function to set the various high pass filter
+        options.  This sets CTRL_REG2 (0x21)
+
+        mode - normal, reference, normalreset, autoreset
+        freq - see table 8 of the LIS3DH app note
+        FDS (filtered data selection) bypass - on or off """
+
+        if mode == 'normalreset':
+            modeBits = 0b0
+        elif mode == 'reference':
+            modeBits = 0b1
+        elif mode == 'autoreset':
+            modeBits = 0b11
+        else: # mode = 'normal'
+            modeBits = 0b10
+
+        freq = int(abs(freq))
+
+        if freq > 0b11:
+            freqBits = 0b11
+        else:
+            freqBits = freq
+
+        CTRL_REG2 = ((modeBits<<6) + (freqBits<<4) + (FDS<<3) + (hpClick<<2)
+                     + (hpIS2<<1) +hpIS1)
+
+        #print(bin(CTRL_REG2)) # for testing
+
+        self.single_access_write(0x21, CTRL_REG2)
+
         return        
 
     def set_int1_config(self, aoi=1, d6=0, zh=0, zl=0, yh=0, yl=0, xh=0, xl=0):
@@ -482,9 +535,7 @@ class Accelerometer:
 
         self.single_access_write(0x33, durationBits)
 
-        return
-
-        
+        return        
 
     def set_int1_pin(self, click=0,aoi1=0, aoi2=0, drdy1=0, drdy2=0, wtm=0, overrun=0):
         """set_int1, function to which interrupt signals get pushed to
@@ -563,6 +614,26 @@ class Accelerometer:
 
         return
 
+    def set_resolution(self, res='low'):
+        """set_resolution, function to set the accelerometer resolution
+        to either high or low.  This sets bit 3 of CTRL_REG4 (0x23)"""
+
+        CTRL_REG4 = self.single_access_read(0x23)
+
+        resBit = 0b0  # default value: low
+
+        if res == 'high':
+            resBit = 0b1
+
+        CTRL_REG4 = CTRL_REG4 & 0b11110111
+        CTRL_REG4 = CTRL_REG4 | (resBit<<3)
+
+        #print (bin(CTRL_REG4)) # for testing
+
+        self.single_access_write(0x23, CTRL_REG4)
+
+        return
+
     def set_scale(self, scale=2):
         """set_scale, function to set the scale used by the
         accelerometer; +-2g, 4g, 8g, 16g"""
@@ -588,6 +659,14 @@ class Accelerometer:
         #print (bin(CTRL_REG4)) # for testing
 
         self.single_access_write(0x23, CTRL_REG4)
+
+        return
+
+    def set_temperature_offset(self, offset):
+        """set_temperature_offset, function to set the temperature
+        offset value"""
+
+        self.temperatureOffset = offset
 
         return
 
