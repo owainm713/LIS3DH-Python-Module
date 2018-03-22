@@ -2,7 +2,7 @@
 """LIS3DH, module for use with a LIS3DH accelerometer
 
 created Mar 27, 2017 OM
-work in progress - Apr 4, 2017 OM"""
+work in progress - Mar 21, 2018 OM"""
 
 """
 Copyright 2017 Owain Martin
@@ -35,6 +35,7 @@ class Accelerometer:
         if self.mode == 'spi':
             self.spi=spidev.SpiDev()
             self.spi.open(spiPort,spiCS)
+	    self.spi.max_speed_hz = 4000000
         else:  #i2C
             self.bus = smbus.SMBus(1)
             self.addr = i2cAddress
