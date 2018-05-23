@@ -12,7 +12,7 @@ SPI connections to the LIS3DH board from the Pi are as follows:
 - Pi SCLK to LIS3DH SCL
 - Pi MOSI to LIS3DH SDA
 - Pi MISO to LIS3DH SDO
-- Pi CE1 to LIS3DH CS
+- Pi CE0 or CE1 to LIS3DH CS
 - LIS3DH INT - not connected
 
 i2c connections to the LIS3DH board from the Pi are as follows:
@@ -66,3 +66,10 @@ Current functions include
 - x_axis_reading()
 - y_axis_reading()
 - z_axis_reading()
+
+Updates
+
+May 22 2018
+Added LIS3DHDataReadyInterruptExample to demonstrate the use of the data ready interrupt (drdy1) of the sensor.
+This example requires the use of the RPi.GPIO module. Lower ODR rates (<200) work better for this.
+ 

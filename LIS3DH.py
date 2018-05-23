@@ -5,7 +5,7 @@ created Mar 27, 2017 OM
 work in progress - Mar 21, 2018 OM"""
 
 """
-Copyright 2017 Owain Martin
+Copyright 2018 Owain Martin
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
