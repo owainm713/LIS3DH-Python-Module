@@ -69,6 +69,9 @@ Current functions include
 
 Updates
 
+Dec 15, 2018
+Made correction to max time limit in set_click_timelatency and set_click_timewindow functions
+
 May 22 2018
 Added LIS3DHDataReadyInterruptExample to demonstrate the use of the data ready interrupt (drdy1) of the sensor.
 This example requires the use of the RPi.GPIO module. Lower ODR rates (<200) work better for this.

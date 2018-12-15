@@ -2,7 +2,7 @@
 """LIS3DH, module for use with a LIS3DH accelerometer
 
 created Mar 27, 2017 OM
-work in progress - Mar 21, 2018 OM"""
+work in progress - Dec 15, 2018 OM"""
 
 """
 Copyright 2018 Owain Martin
@@ -405,11 +405,11 @@ class Accelerometer:
         duration = abs(duration)
 
         if duration > (float(255000)/float(self.odr)):
-            durationBits = 0b01111111
+            durationBits = 0b11111111
 
         else:
             durationBits = int((float(duration) / float(1000)) * self.odr)
-            durationBits = durationBits & 0b01111111
+            durationBits = durationBits & 0b11111111
 
         #print(bin(durationBits))  # for testing
 
@@ -424,11 +424,11 @@ class Accelerometer:
         duration = abs(duration)
 
         if duration > (float(255000)/float(self.odr)):
-            durationBits = 0b01111111
+            durationBits = 0b11111111
 
         else:
             durationBits = int((float(duration) / float(1000)) * self.odr)
-            durationBits = durationBits & 0b01111111
+            durationBits = durationBits & 0b11111111
 
         #print(bin(durationBits))  # for testing
 
