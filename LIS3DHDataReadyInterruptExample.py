@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """LIS3DHDAtaReadyInterruptExample, file containing example for using the LIS3DH accelerometer
 data ready interrupt
 
 created May 22, 2018 OM
-work in progress - May 22, 2018 OM"""
+work in progress - Jan 3, 2020 OM"""
 
 
 """
-Copyright 2018 Owain Martin
+Copyright 2020 Owain Martin
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

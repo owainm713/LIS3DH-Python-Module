@@ -1,5 +1,5 @@
 # LIS3DH-Python-Module
-Python 2.x module to use with the LIS3DH accelerometer. Testing done on a adafruit LIS3DH breakout board and a Raspberry Pi3.  Other LIS3DH breakout boards,  i.e. sparkfun should work as well, just be careful on your voltage levels on the various pins.
+Python 3.x & 2.x module to use with the LIS3DH accelerometer. Testing done on a adafruit LIS3DH breakout board and a Raspberry Pi3.  Other LIS3DH breakout boards,  i.e. sparkfun should work as well, just be careful on your voltage levels on the various pins.
 
 This supports both SPI and i2C. SPI requires py-spidev and python-dev modules. i2C requires smbus
 
@@ -68,6 +68,9 @@ Current functions include
 - z_axis_reading()
 
 Updates
+
+Jan 3, 2020
+Tested module with Python3 
 
 Dec 15, 2018
 Made correction to max time limit in set_click_timelatency and set_click_timewindow functions

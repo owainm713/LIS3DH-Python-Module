@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """LIS3DH, module for use with a LIS3DH accelerometer
 
 created Mar 27, 2017 OM
-work in progress - Dec 15, 2018 OM"""
+work in progress - Jan 3, 2020 OM"""
 
 """
-Copyright 2018 Owain Martin
+Copyright 2020 Owain Martin
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class Accelerometer:
         if self.mode == 'spi':
             self.spi=spidev.SpiDev()
             self.spi.open(spiPort,spiCS)
-	    self.spi.max_speed_hz = 4000000
+            self.spi.max_speed_hz = 4000000
         else:  #i2C
             self.bus = smbus.SMBus(1)
             self.addr = i2cAddress
